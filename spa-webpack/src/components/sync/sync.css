@@ -1,0 +1,7 @@
+.test{
+  --fontColor: yellow;
+  color: var(--fontColor);
+}
+/* :hero:matches(main,.main){
+
+} */
