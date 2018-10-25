@@ -1,5 +1,5 @@
 .test{
-  --fontColor: yellow;
+  --fontColor: red;
   color: var(--fontColor);
 }
 /* :hero:matches(main,.main){
