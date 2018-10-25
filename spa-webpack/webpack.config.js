@@ -31,6 +31,23 @@ const config = {
       }
     ]
   },
+
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          chunks: 'initial',
+          name: 'common',
+          minChunks: 1,
+          maxInitialRequests: 5,
+          minSize: 0
+        }
+      }
+    },
+    runtimeChunk: {
+      name: 'runtime'
+    }
+  },
   plugins: [
     // new WebpackDeepScopeAnalysisPlugin(),
     new MiniCssExtractPlugin({
@@ -50,4 +67,4 @@ const config = {
   ]
 }
 
-module.exports = merge(config, _mergeConig)
+module.exports = merge( _mergeConig,config)
