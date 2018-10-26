@@ -1,0 +1,18 @@
+
+{% extends './layout.html'%}
+
+{% block styles%}
+  <link rel="stylesheet" href="/index.css">
+
+{% endblock%}
+
+{% block conntent%}
+
+  {% include '../components/banner/banner.html'%}
+{% endblock%}
+
+{% block scripts %}
+  <script type="text/javascript">
+    console.log("init")
+  </script>
+{% endblock %}
