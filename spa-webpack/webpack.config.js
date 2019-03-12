@@ -9,7 +9,15 @@ const _modeflag = _mode === 'production'
 const _mergeConig = require(`./config/webpack.${_mode}.js`)
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-
+const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
+const WebpackBuildNotifierPlugin = require('webpack-build-notifier');
+const smp = new SpeedMeasurePlugin();
+const ProgressBarPlugin = require('progress-bar-webpack-plugin');
+const DashboardPlugin = require('webpack-dashboard/plugin');
+const ManifestPlugin = require('webpack-manifest-plugin')
+const setTitle = require('node-bash-title');
+// setTitle('🍻  Server');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const {
   join
 } = require('path')
@@ -17,7 +25,10 @@ const {
 const glob = require('glob')
 const path = require('path')
 const setIterm2Badge = require('set-iterm2-badge')
-setIterm2Badge('开发环境')
+// setIterm2Badge('开发环境')
+const loading = {
+  html: '加载中'
+}
 const config = {
   module: {
     rules: [
@@ -46,9 +57,16 @@ const config = {
     },
     runtimeChunk: {
       name: 'runtime'
-    }
+    },
+    // minimizer: [new UglifyJsPlugin({
+    //   // parallel: true
+    //   parallel: true,
+    // })]
   },
   plugins: [
+    // new ProgressBarPlugin(),
+    new ManifestPlugin(),
+    // new DashboardPlugin(),
     // new WebpackDeepScopeAnalysisPlugin(),
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
@@ -56,15 +74,21 @@ const config = {
       filename: _modeflag ? "styles/[name].[hash:5].css" : "styles/[name].css",
       chunkFilename: _modeflag ? "styles/[id].[hash:5].css" : "styles/[id].css"
     }),
-    new PurifyCSSPlugin({
-      paths: glob.sync(path.join(__dirname, './src/*.html'))
-    }),
+    // new PurifyCSSPlugin({
+    //   paths: glob.sync(path.join(__dirname, './src/*.html'))
+    // }),
     new CleanWebpackPlugin(['dist']),
     new HtmlWebpackPlugin({
       filename: 'index.html',
-      template: 'src/index.html'
+      template: 'src/index.html',
+      loading
+    }),
+    new WebpackBuildNotifierPlugin({
+      title: "My Project Webpack Build",
+      suppressSuccess: true
     }),
   ]
 }
 
-module.exports = merge( _mergeConig,config)
+// module.exports = smp.wrap(merge( _mergeConig,config))
+module.exports = merge(_mergeConig,config)

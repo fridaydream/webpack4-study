@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[2],[function(e,n,t){},,function(e,n,t){"use strict";t.r(n),Array.isArray;var i=t(0),s=t.n(i);t.e(1).then(t.bind(null,4)).then(e=>{e.default.init()}),fetch("/api/test").then(e=>e.json()).then(e=>void 0),setTimeout(()=>{document.getElementById("app").innerHTML=`<h1 class="${s.a.test}">hello</h1>`},2e3)}]]);
